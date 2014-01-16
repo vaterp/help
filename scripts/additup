@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+$x = 0;
+
+while ($x < 256)
+{
+	print ("192\.168\.$x\. = ");
+
+	system "grep 192\.168\.$x\. dp.txt | wc -l";
+	$x = $x + 1;
+}
+
+
+

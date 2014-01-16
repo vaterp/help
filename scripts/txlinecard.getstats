@@ -1,0 +1,39 @@
+#!/usr/bin/expect
+
+
+#The following can be changed
+#For TAC network
+#set txlc "192.168.77.222"
+#For QA network
+set txlc "172.17.90.80"
+set port 23
+set username admin
+set password iDirect
+
+# Set the timeout to an appropriate value
+set timeout 2
+
+set prompt_sequence "> "
+
+   spawn telnet $txlc $port
+
+   expect "Username: "
+   send "$username\r"
+   expect "Password:"
+   send "$password\r"
+   #expect -gl "TERM = (*)"
+   expect $prompt_sequence
+
+   send "tx raven stats all\r"
+   expect $prompt_sequence
+
+   #send "peek -lt 0x56018e00 16\r"
+   #expect $prompt_sequence
+
+   #send "peek -lt 0x563f8020 4\r"
+   #expect $prompt_sequence
+
+   send "quit\r"
+   expect $prompt_sequence
+
+exit 0

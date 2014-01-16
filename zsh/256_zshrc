@@ -1,0 +1,232 @@
+# /etc/zshrc: This file contains system wide settings for Z Shell.
+# Created by: Greg Fitzgerald. Revised: 03-30-02  <email:gregf@elitepimps.org>
+
+trap clear 0
+
+# Set the values for some environment variables:
+export MINICOM="-c on"
+export MANPATH=/usr/local/man:/usr/man:/usr/X11R6/man
+export HOSTNAME="`cat /etc/HOSTNAME`"
+export LESSOPEN="|lesspipe.sh %s"
+export LESS="-M"
+export MOZILLA_HOME=/usr/local/mozilla
+export MOZILLA_FIVE_HOME=/usr/local/mozilla
+export TERM=xterm-color
+export EDITOR=vim
+export CVS_RSH=ssh
+export KDEDIR=/opt/kde3
+export QTDIR=/usr/lib/qt
+
+## compiler opt. flags #!!!# use this with caution #!!!# or dont use
+case "`uname -m`" in
+	i686)
+	[[ ${+CFLAGS} -eq 0 ]] && export CFLAGS='-O9 -funroll-loops -ffast-math -malign-double -mcpu=pentiumpro -march=pentiumpro -fomit-frame-pointer -fno-exceptions'
+;;
+	i586)
+	[[ ${+CFLAGS} -eq 0 ]] && export CFLAGS='-O3 -march=pentium -mcpu=pentium -ffast-math -funroll-loops -fomit-frame-pointer -fforce-mem -fforce-addr -malign-double -fno-exceptions'
+;;
+	i486)
+	[[ ${+CFLAGS} -eq 0 ]] && export CFLAGS='-O3  -funroll-all-loops -malign-double -mcpu=i486 -march=i486 -fomit-frame-pointer -fno-exceptions'
+;;
+	*)
+	[[ ${+CXXFLAGS} -eq 0 ]] && export CXXFLAGS=$CFLAGS
+esac
+
+# Watch for logins
+watch=(notme root)
+
+## Auto logout after timeout in seconds
+TMOUT=1800
+## if we are in X then disable TMOUT
+case $TERM in
+	*xterm*|rxvt|(dt|k|E)term)
+	unset TMOUT
+	;;
+esac
+
+## Use hard limits, except for a smaller stack and no core dumps
+unlimit
+limit stack 8192
+limit core 0
+limit -s
+
+# Create $user history files
+HISTSIZE=10000
+HISTFILE=$HOME/.zsh_history
+SAVEHIST=65536
+DIRSTACKSIZE=16
+
+# Stop annoying MailChecks im not using AOL
+unset MAILCHECK
+
+# Seconds for login/logout check
+LOGCHECK=120
+
+## remove duplicate entries from path,cdpath,manpath & fpath
+typeset -U path cdpath manpath fpath
+
+# Set aliases
+alias p='ps -fu $USER'
+alias ls='ls --classify --tabsize=0 --literal --color=auto --show-control-chars --human-readable'
+alias sx=startx
+alias bz="tar xvyf"
+alias utar="tar -xvzf"
+alias ctar="tar -cvpf"
+alias gz=gunzip
+alias vi=vim
+alias emacs=xemacs
+alias rm="rm -rf"
+# Update a CVS Tree
+alias cup='cvs -z3 update -Pd'
+# Make ssh use unprivileged ports
+alias ssh=' ssh -P'
+alias admin="ssh admin@closeedge.net"
+alias gregf="ssh gregf@closeedge.net"
+alias whore="ssh gregf@192.168.0.3"
+alias lucifer="ssh gregf@192.168.0.1"
+alias su="su -"
+alias format="fdformat /dev/fd0"
+## global aliases, this is not good but it's useful
+alias -g L='|less'
+alias -g G='|grep'
+alias -g T='| tail -20'
+alias -g H='| head -20'
+alias -g W='| wc -l'
+alias -g S='| sort'
+alias -g US='| sort -u'
+alias -g NS='| sort -n'
+alias -g RNS='| sort -nr'
+## changing terminal type
+alias v1='export TERM=vt100'
+alias v2='export TERM=vt220'
+alias vx='export TERM=xterm-color'
+
+# Set/unset  shell options
+setopt notify pushdtohome cdable_vars
+setopt autoresume histignoredups pushdsilent noclobber
+setopt autopushd pushdminus extended_glob rcquotes mailwarning
+setopt rm_star_silent nobeep append_history
+setopt complete_in_word glob_dots login long_list_jobs print_eight_bit
+setopt pushd_ignore_dups share_history
+setopt EXTENDED_HISTORY
+unsetopt bgnice autoparamslash menu_complete correct flow_control
+
+# find process to kill and kill it
+pskill()
+{
+	local pid
+	pid=$(ps -ax | grep $1 | awk --posix '{ print $1 }')
+	echo -n "killing $1 (process $pid)..."
+	kill -9 `print -r $pid`
+	echo "slaughtered."
+}
+
+## find all suid files
+suidfind()
+{ ls -l /**/*(su0x) }
+
+# Get keys working
+case $TERM in 
+	linux)
+	bindkey "^[[2~" yank
+	bindkey "^[[3~" delete-char
+	bindkey "^[[5~" up-line-or-history
+	bindkey "^[[6~" down-line-or-history
+	bindkey "^[[1~" beginning-of-line
+	bindkey "^[[4~" end-of-line
+	bindkey "^[e" expand-cmd-path ## C-e for expanding path of typed command
+	bindkey "^[[A" up-line-or-search ## up arrow for back-history-search
+	bindkey "^[[B" down-line-or-search ## down arrow for fwd-history-search
+	bindkey " " magic-space ## do history expansion on space
+	bindkey -v # for vi
+;;
+	*xterm*|rxvt|(dt|k|E)term)
+	bindkey "^[[2~" yank
+	bindkey "^[[3~" delete-char
+	bindkey "^[[5~" up-line-or-history
+	bindkey "^[[6~" down-line-or-history
+	bindkey "^[[1~" beginning-of-line
+	bindkey "^[[4~" end-of-line
+	bindkey "^[e" expand-cmd-path ## C-e for expanding path of typed command
+	bindkey "^[[A" up-line-or-search ## up arrow for back-history-search
+	bindkey "^[[B" down-line-or-search ## down arrow for fwd-history-search
+	bindkey " " magic-space ## do history expansion on space
+	bindkey -v # for vi
+
+;;
+esac
+
+# Shell functions
+setenv() { export $1=$2 }  # csh compatibility
+
+# Use hard limits, except for a smaller stack and no core dumps
+unlimit
+limit stack 8192
+limit core 0
+limit -s
+	
+hostnames=(
+    lucifer.mylan
+    closeedge.net
+    home.hosting4cheap.net
+    commercial.hosting4cheap.net
+    irc.linux.com
+    irc.efnet.org
+    irc.dal.net
+    ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##\
+[:blank:]#[^[:blank:]]#}}}
+)
+
+
+# Tab host completion for programs  
+compctl -k hostnames ping telnet ncftp ftp host nslookup irssi rlogin ssh
+
+# Make completion (yeah im getting fucking lazy)
+compile=(install clean remove menuconfig mrproper)
+compctl -k compile make
+
+# Talk completion
+function whoson { reply=(`users`); }
+compctl -K whoson talk ytalk
+
+# Autocomplete for current dir on filetypes
+compctl -g '*.Z *.gz *.tgz' + -g '*' zcat gunzip
+compctl -g '*.tar.Z *.tar.gz *.tgz *.tar.bz2' + -g '*' tar
+compctl -g '*.zip *.ZIP' + -g '*' unzip
+compctl -g '*.(mp3|MP3|ogg|OGG|temp|TEMP)' + -g '*(-/)'  mpg123 xmms
+
+# Set the default system $PATH:
+PATH="/usr/local/bin:/usr/bin:/bin:/usr/X11R6/bin:/usr/games:/opt/kde3/bin:/opt/gnome/bin:/usr/local/mysql/bin:/usr/local/mozilla:/opt/schily/bin:/usr/local/j2re1.3.1/bin/"
+
+# For root users, ensure that /usr/local/sbin, /usr/sbin, and /sbin are in
+if [ "`id -u`" = "0" ]; then
+  echo $PATH | grep /usr/local/sbin 1> /dev/null 2> /dev/null
+  if [ ! $? = 0 ]; then
+    PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
+  fi
+fi
+
+# For non-root users, add the current directory to the search path:
+if [ ! "`id -u`" = "0" ]; then
+ PATH="$PATH:."
+fi
+
+# Set term to linux if no term set
+if [ "$TERM" = "" -o "$TERM" = "unknown" ]; then
+ TERM=linux
+fi
+
+# Set default POSIX locale:
+export LC_ALL=POSIX
+
+# Set prompt and export variables
+PS1='%n@%m:%~%# '
+export PATH DISPLAY LESS TERM PS1 ignoreof
+
+#To help prevent users changing permissions to share files.
+umask 077
+
+# If root set unmask to 022 to prevent new files being created group and world writable
+if [ "`id -u`" = "0" ]; then
+    umask 022
+fi

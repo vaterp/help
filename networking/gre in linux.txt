@@ -1,0 +1,8 @@
+modprobe ip_gre
+ip tunnel add netgre mode gre remote 172.24.96.5 local 172.20.134.5 ttl 255
+ip link set netgre up
+ip addr add 192.1.2.3 dev netgre
+ip route add 172.24.106.0/24 dev netgre
+
+echo 1 > /proc/sys/net/ipv4/ip_forward
+

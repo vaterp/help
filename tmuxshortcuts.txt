@@ -1,0 +1,71 @@
+------MISC----------------
+    ? to bring up list of keyboard shortcuts
+C-z         Suspend the tmux client.
+#           List all paste buffers.
+$           Rename the current session.
+-           Delete the most recently copied buffer of text.
+:           Enter the tmux command prompt.
+   info     lists out every session, window, pane , pid, etc
+	 list-keys
+	 list-commands
+d           Detach the current client.
+s           Select a new session for the attached client interactively.
+=           Choose which buffer to paste interactively from a list.
+D           Choose a client to detach.
+[           Enter copy mode to copy text or view the history.
+]           Paste the most recently copied buffer of text.
+r           Force redraw of the attached client.
+L           Switch the attached client back to the last session.
+~           Show previous messages from tmux, if any.
+Page Up     Enter copy mode and scroll one page up
+
+-----------------WINDOWS------------------------
+0 to 9      Select windows 0 to 9.
+c/n/p/[0-9]/l create / next/ prev/ select window / last window
+w : List windows
+f           Prompt to search for text in open windows.
+M-n         Move to the next window with a bell or activity marker.
+M-p         Move to the previous window with a bell or activity
+Control + a then & to kill window
+&           Kill the current window.
+'           Prompt for a window index to select.
+,           Rename the current window.
+.           Prompt for an index to move the current window.
+c           Create a new window.
+i           Display some information about the current window.
+l           Move to the previously selected window.
+n           Change to the next window.
+p           Change to the previous window.
+w           Choose the current window interactively.
+
+-----------------PANES--------------------------
+
+"/%           Horizontal split / vertical split
+;           Move to the previously active pane.
+o           Select the next pane 
+q           Briefly display pane indexes.
+x           Kill the current pane.
+{           Swap the current pane with the previous pane.
+}           Swap the current pane with the next pane.
+M-1 to M-5  Arrange panes in one of the five preset layouts: even-
+            horizontal, even-vertical, main-horizontal, main-
+            vertical, or tiled.
+M-o         Rotate the panes backwards.
+C-Up, C-Down
+C-Left, C-Right
+            Resize the current pane in steps of one cell.
+M-Up, M-Down
+M-Left, M-Right
+            Resize the current pane in steps of five cells.
+C-o         Rotate the panes forwards.
+!           Break the current pane out of the window.
+<Space> to change pane arrangement
+(up/down/left/right) or
+h, j, k, l to move left, down, up, right. Respectively. (vim hjkl)
+
+
+-----------------COMDS-------------------------
+tmux list-sessions
+tmux attach -t 'session-name'
+tmux new -s 'session-name'
+:rename-session

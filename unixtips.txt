@@ -1,15 +1,13 @@
-#
-#Diff examples
-#
+" vim: set tabstop=40 expandtab textwidth=0 foldenable foldmethod=marker foldlevel=0:
+
+# {{{1  {{{1 Diff examples
 diff -qr 3.1.0.99 3.1.50.0 --ignore-matching-lines='^#' --ignore-matching-lines='generated_by' -x "CVS"  > x  #ignore some lines and prune directory tree
 diff <(grep = config.txt) <(grep = config.txt-new) # Compare just the assignment lines of two config files that use = for value assignment.
 diff <(egrep -v "(^;|^$)" file) <(egrep -v "(^;|^$)" file2) #compare 2 files stripping comments/blank lines
 diff <(ssh host{a,b} 'cat foo.cfg') #compare foo.cfg on 2 different remote hosts
 
 
-#
-#MISC
-#
+# {{{1  {{{1 MISC
 printf "\e[%dm%d dark\e[0m \e[%d;1m%d bold\e[0m\n" {30..37}{,,,} #Show basic terminal text colors for term preferences
 md5sum * | awk {'print $1'}| sort | uniq -c | grep -v " 1 "      #Find out if any dup files exist
 du -cms | sort -rn | head -20    #List 20 largest files/folders under CWD
@@ -22,18 +20,14 @@ pbpaste | sed 's/2013/2014/g' | pbcopy  #Same as above for MacOS
 cut -d: -f2-4,7 --complement < FILE | Cut the opposite of columns of 2,3,4&7
 tar pzcvf /var-backup.tar.gz /var --exclude=/var/lib/{mysql,pgsql} #exclude 2 dirs from tar with brace expansion
 
-#
-#find examples
-#
+# {{{1  {{{1 find examples
 find . -maxdepth 1 -type f \! \(-name 'file1' -o -name 'file2'\) -delete #delete all files in CWD except file1 and file2
 find . -size +100M -type f -exec du -h {} \; #Find all files >100M and display human readable size
 find . -maxdepth 1 -daystart -type f -name '*.jpg' -mtime -$(date +%j) -exec mv -v {} 2013/\; #Mv current year pics to 2013 directory
 find . -printf"%TY %p\n" # Get a list of all files last modified by year
 
 
-#
-#Scripting
-#
+# {{{1 Scripting
 python -m SimpleHTTPServer 8080                  #Start a webserver to feed current directory of files.
 tail -f FILE | perl -ne 'print localtime ."$_";' #add timestamps to program output
 until ping -w1 -c1 a.b.c.d; do sleep 5; done && play alarm.wav #Play an alarm file once the internet returns
@@ -41,52 +35,42 @@ for i in {2..255}; do ip addr add 2001:db8::$(printf "%x" $i)/32 dev $IFACE;done
 while ps -p ABCD > /dev/null; do sleep 5; done; echo "DONE" #wait until ABCD process exists
 
 
-#
-#Networking
-# nmap help: www.tecmint.com/nmap-command-examples
-#
+# {{{1 Networking
+nmap help: www.tecmint.com/nmap-command-examples
 sudo netstat -lepunt #show tcp/udp ports being lisented on and by what process
 sudo nmap -p 22 -open -v -oG - 10.0.0.0/24 | grep 22/open #scan local network for open ssh servers
 sudo nmap -sP a.b.c.d/24 #scan for active hosts on a network
 sudo nmap -sP 10.0.0.0/24  #See what hosts exist on subnet
 
-
 SERVER:nc -q1 -lvp 1234 < file.txt    #Server up this file to anyone that connects on port 1234
 CLIENT:nc $SERVER 1234 > output.txt   #Grab the file.
 
-#
-#ssh
-#
+# {{{1 ssh
 ssh-keygen -t dsa  # To create ssh keys
 ssh root@HOST tcpdump -n -w- 'not \(port 22 and host HOST\)' | etherape -r- #instant visulation of traffic
 ssh -f -N -L2001:www.google.com:80 somemachine #Create a tunnel from my computer's 2001 port too ssh tunnel requests via somemachine to open a connection to google.com
 ssh user@HOST cat /path/to/file | diff /path/to/local/file - #Pipe to stdin a remote file and compare to local file from stdin
 ssh-copy-id remote-host #copy id_dsa.pub to authorizekeys on remote-host
 
-#
-#RPM
-#
+# {{{1 RPM
 rpm -q --all --last #List all packages installed in date order
 rpm -q --all | sort #To see all packages in sort order
 rpm -q --all | sort | tac # In reverse sort order
 rpm -qa --filesbypkg | grep "/var/log" # List all rpm packaged files in /var/log by what rpm they belong to
 rpm -ql mailman | xargs file #Show files/directories managed by an rpm
 
-#
-#GIT
-#
+# {{{1 GIT
 git log --author=USER --format="- %B" --since=-7days --reverse
 tar czf diff.tar.gz $(git diff --name-only [commit1] [commit2]) #Create an archive of file changes between 2 commits
 
 
-#
-#Other nifty tool examples
-#
+# {{{1 Other nifty tool examples
 watch -n1 cat /proc/net/wireless # Monitor your wireless card signal strength on the screen.
 
 
-#
-#VIM
-#
+# {{{1 VIM
 vimdiff scp://bsnyder@blah//tmp/x scp://bsnyder@blah2//tmp/x
+
+# {{{1 SED
+sed 3,/^$/d FILE   #Delete from lines 3 to first blank line in FILE
 

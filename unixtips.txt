@@ -50,7 +50,7 @@ CLIENT:nc $SERVER 1234 > output.txt   #Grab the file.
 # {{{1 ssh
 ssh-keygen -t dsa  # To create ssh keys
 ssh root@HOST tcpdump -n -w- 'not \(port 22 and host HOST\)' | etherape -r- #instant visulation of traffic on another server
-ssh root@HOST tcpdump -U -s0 -w- '<filter>' | wireshark -k -i               #local wireshark of another computer traffic
+ssh root@HOST tcpdump -U -s0 -w- '<filter>' | wireshark -k -i-               #local wireshark of another computer trafficEND
 ssh -f -N -L2001:www.google.com:80 somemachine #Create a tunnel from my computer's 2001 port too ssh tunnel requests via somemachine to open a connection to google.com
 ssh user@HOST cat /path/to/file | diff /path/to/local/file - #Pipe to stdin a remote file and compare to local file from stdin
 ssh-copy-id remote-host #copy id_dsa.pub to authorizekeys on remote-host

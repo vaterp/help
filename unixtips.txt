@@ -18,15 +18,20 @@ ls -la --full-time | tr -s " " | cut -f6 -d " " | sed '/^$/d' | sort | uniq -c #
 xsel -b | sed 's/2013/2014/g' | xsel -b #Replace all instances of 2013 with 2014 in Xwindows copy buffer
 pbpaste | sed 's/2013/2014/g' | pbcopy  #Same as above for MacOS
 cut -d: -f2-4,7 --complement < FILE | Cut the opposite of columns of 2,3,4&7
+for user in $(cut -f1 -d: /etc/passwd); do echo $user;crontab -u $user -l; done #List all user setup crontabs
+   cat /etc/passwd | awk -F: '{print "crontab -u "$1" l"}' |sh
 tar pzcvf /var-backup.tar.gz /var --exclude=/var/lib/{mysql,pgsql} #exclude 2 dirs from tar with brace expansion
 COMMAND  | column -t #For nice easy tabling
 tac #reverse a file output from cat
+alias clc="fc -l -n -1 -1 | sed -r 's/^\s+//' | xclip -sel clip" #copy last cmd to X clibboard
 
 # {{{1  {{{1 find examples
 find . -maxdepth 1 -type f \! \(-name 'file1' -o -name 'file2'\) -delete #delete all files in CWD except file1 and file2
 find . -size +100M -type f -exec du -h {} \; #Find all files >100M and display human readable size
 find . -maxdepth 1 -daystart -type f -name '*.jpg' -mtime -$(date +%j) -exec mv -v {} 2013/\; #Mv current year pics to 2013 directory
 find . -printf"%TY %p\n" # Get a list of all files last modified by year
+find {,/usr}/{,s}bin -name '??' #Use brace expansino to check all your bin and /usr/bin dirs at once for any 2 letter cmd
+
 
 
 # {{{1 Scripting

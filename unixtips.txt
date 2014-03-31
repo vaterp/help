@@ -9,7 +9,6 @@ diff <(ssh host{a,b} 'cat foo.cfg') #compare foo.cfg on 2 different remote hosts
 
 # {{{1  {{{1 MISC
 printf "\e[%dm%d dark\e[0m \e[%d;1m%d bold\e[0m\n" {30..37}{,,,} #Show basic terminal text colors for term preferences
-md5sum * | awk {'print $1'}| sort | uniq -c | grep -v " 1 "      #Find out if any dup files exist
 du -cms | sort -rn | head -20    #List 20 largest files/folders under CWD
 dd if=/dev/zero of=test.txt bs=1M count=1000 #Create a 1 gig file of ZEROES.
 ls -ld */* #long list dirs inside CWD, bont not contents.
@@ -19,13 +18,17 @@ xsel -b | sed 's/2013/2014/g' | xsel -b #Replace all instances of 2013 with 2014
 pbpaste | sed 's/2013/2014/g' | pbcopy  #Same as above for MacOS
 cut -d: -f2-4,7 --complement < FILE | Cut the opposite of columns of 2,3,4&7
 for user in $(cut -f1 -d: /etc/passwd); do echo $user;crontab -u $user -l; done #List all user setup crontabs
-   cat /etc/passwd | awk -F: '{print "crontab -u "$1" l"}' |sh
 tar pzcvf /var-backup.tar.gz /var --exclude=/var/lib/{mysql,pgsql} #exclude 2 dirs from tar with brace expansion
 COMMAND  | column -t #For nice easy tabling
 tac #reverse a file output from cat
 alias clc="fc -l -n -1 -1 | sed -r 's/^\s+//' | xclip -sel clip" #copy last cmd to X clibboard
 
-# {{{1  {{{1 find examples
+# {{{1  awk examples
+awk 'length >64' #Print lines >65 chars
+md5sum * | awk {'print $1'}| sort | uniq -c | grep -v " 1 "      #Find out if any dup files exist
+cat /etc/passwd | awk -F: '{print "crontab -u "$1" l"}' |sh #List all user setup crontabs
+
+# {{{1  find examples
 find . -maxdepth 1 -type f \! \(-name 'file1' -o -name 'file2'\) -delete #delete all files in CWD except file1 and file2
 find . -size +100M -type f -exec du -h {} \; #Find all files >100M and display human readable size
 find . -maxdepth 1 -daystart -type f -name '*.jpg' -mtime -$(date +%j) -exec mv -v {} 2013/\; #Mv current year pics to 2013 directory
@@ -40,6 +43,7 @@ tail -f FILE | perl -ne 'print localtime ."$_";' #add timestamps to program outp
 until ping -w1 -c1 a.b.c.d; do sleep 5; done && play alarm.wav #Play an alarm file once the internet returns
 for i in {2..255}; do ip addr add 2001:db8::$(printf "%x" $i)/32 dev $IFACE;done #Add IPV6 ips to iface
 while ps -p ABCD > /dev/null; do sleep 5; done; echo "DONE" #wait until ABCD process exists
+tail -F /var/log/syslog | while read -r line; do printf "\e[38;5;%dm%s\e[0m\n" $(($RANDOM%255)) "$line"; done #Random color per log line
 
 
 # {{{1 Networking

@@ -5,6 +5,7 @@ diff -qr 3.1.0.99 3.1.50.0 --ignore-matching-lines='^#' --ignore-matching-lines=
 diff <(grep = config.txt) <(grep = config.txt-new) # Compare just the assignment lines of two config files that use = for value assignment.
 diff <(egrep -v "(^;|^$)" file) <(egrep -v "(^;|^$)" file2) #compare 2 files stripping comments/blank lines
 diff <(ssh host{a,b} 'cat foo.cfg') #compare foo.cfg on 2 different remote hosts
+diff <(cd dir1;ls -1 | sort) <(cd dir2; ls -1 | sort) #Show diffs between 2 dirs
 
 
 # {{{1  {{{1 MISC
@@ -22,6 +23,7 @@ tar pzcvf /var-backup.tar.gz /var --exclude=/var/lib/{mysql,pgsql} #exclude 2 di
 COMMAND  | column -t #For nice easy tabling
 tac #reverse a file output from cat
 alias clc="fc -l -n -1 -1 | sed -r 's/^\s+//' | xclip -sel clip" #copy last cmd to X clibboard
+ps auxwf #full process output in tree view
 
 # {{{1  awk examples
 awk 'length >64' #Print lines >65 chars
@@ -52,6 +54,9 @@ sudo netstat -lepunt #show tcp/udp ports being lisented on and by what process
 sudo nmap -p 22 -open -v -oG - 10.0.0.0/24 | grep 22/open #scan local network for open ssh servers
 sudo nmap -sP a.b.c.d/24 #scan for active hosts on a network
 sudo nmap -sP 10.0.0.0/24  #See what hosts exist on subnet
+
+lsof -iTCP:80 #Show what procs are using port 80
+lsof -iTCP@irc.evil.net:1024-50000 -s TCP:ESTABLISHED #Filter by port range tohost and conn state
 
 SERVER:nc -q1 -lvp 1234 < file.txt    #Server up this file to anyone that connects on port 1234
 CLIENT:nc $SERVER 1234 > output.txt   #Grab the file.

@@ -1,0 +1,115 @@
+"\C-g": abort
+"\C-x\C-g": abort
+"\e\C-g": abort
+"\C-j": accept-line
+"\C-m": accept-line
+# alias-expand-line (not bound)
+# arrow-key-prefix (not bound)
+# backward-byte (not bound)
+"\C-b": backward-char
+"\eOD": backward-char
+"\e[D": backward-char
+"\C-h": backward-delete-char
+"\C-?": backward-delete-char
+"\C-x\C-?": backward-kill-line
+"\e\C-h": backward-kill-word
+"\e\C-?": backward-kill-word
+"\eOd": backward-word
+"\e[1;5D": backward-word
+"\e[5D": backward-word
+"\eb": backward-word
+"\e<": beginning-of-history
+"\C-xe": call-last-kbd-macro
+"\ec": capitalize-word
+"\C-]": character-search
+"\e\C-]": character-search-backward
+"\C-l": clear-screen
+"\e\e": complete
+"\e!": complete-command
+"\e/": complete-filename
+"\e@": complete-hostname
+"\e{": complete-into-braces
+"\e~": complete-username
+"\e$": complete-variable
+"\C-d": delete-char
+"\e[3~": delete-char
+# delete-char-or-list (not bound)
+"\e\\": delete-horizontal-space
+"\C-x\C-v": display-shell-version
+"\e\C-i": dynamic-complete-history
+"\C-x\C-e": edit-and-execute-command
+"\C-x)": end-kbd-macro
+"\e>": end-of-history
+"\C-e": end-of-line
+"\eOF": end-of-line
+"\e[4~": end-of-line
+"\e[8~": end-of-line
+"\e[F": end-of-line
+"\C-x\C-x": exchange-point-and-mark
+# forward-backward-delete-char (not bound)
+# forward-byte (not bound)
+"\C-f": forward-char
+"\eOC": forward-char
+"\e[C": forward-char
+"\C-s": forward-search-history
+"\eOc": forward-word
+"\e[1;5C": forward-word
+"\e[5C": forward-word
+"\ef": forward-word
+"\eg": glob-complete-word
+"\C-x*": glob-expand-word
+"\C-xg": glob-list-expansions
+# history-and-alias-expand-line (not bound)
+"\e^": history-expand-line
+"\e[5~": history-search-backward
+"\e[A": history-search-backward
+"\e[6~": history-search-forward
+"\e[B": history-search-forward
+"\e#": insert-comment
+"\e*": insert-completions
+"\e.": insert-last-argument
+"\e_": insert-last-argument
+"\C-k": kill-line
+# kill-region (not bound)
+# kill-whole-line (not bound)
+"\ed": kill-word
+"\C-i": menu-complete
+# menu-complete-backward (not bound)
+"\C-n": next-history
+"\eOB": next-history
+"\en": non-incremental-forward-search-history
+# non-incremental-forward-search-history-again (not bound)
+"\ep": non-incremental-reverse-search-history
+# non-incremental-reverse-search-history-again (not bound)
+# old-menu-complete (not bound)
+"\C-o": operate-and-get-next
+# overwrite-mode (not bound)
+"\C-x!": possible-command-completions
+"\e=": possible-completions
+"\e?": possible-completions
+"\C-x/": possible-filename-completions
+"\C-x@": possible-hostname-completions
+"\C-x~": possible-username-completions
+"\C-x$": possible-variable-completions
+"\C-p": previous-history
+"\eOA": previous-history
+"\C-q": quoted-insert
+"\C-v": quoted-insert
+"\e[2~": quoted-insert
+"\C-x\C-r": re-read-init-file
+"\C-r": reverse-search-history
+"\e\C-r": revert-line
+"\e ": set-mark
+"\e\C-e": shell-expand-line
+"\C-x(": start-kbd-macro
+"\e&": tilde-expand
+"\C-t": transpose-chars
+"\et": transpose-words
+"\C-u": unix-line-discard
+"\C-w": unix-word-rubout
+"\eu": upcase-word
+"\C-y": yank
+"\e.": yank-last-arg
+"\e_": yank-last-arg
+"\e\C-y": yank-nth-arg
+"\ey": yank-pop

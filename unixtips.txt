@@ -96,3 +96,8 @@ vimdiff scp://bsnyder@blah//tmp/x scp://bsnyder@blah2//tmp/x
 # {{{1 SED
 sed 3,/^$/d FILE   #Delete from lines 3 to first blank line in FILE
 
+
+
+I Got Nautilus to auto stop the background with
+gsettings set org.gnome.desktop.background show-desktop-icons false
+

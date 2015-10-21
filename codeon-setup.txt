@@ -1,0 +1,23 @@
+clear && proxychains wget -4 54.225.199.132/x10M   #CTCP
+clear && wget -4 54.225.199.132/x10M               #Native (
+
+#To See what's configured
+sudo iptables -L
+sudo tc qdisc show dev eth0
+
+#To set it all up....
+sudo iptables -F
+sudo iptables -A INPUT -d localhost -j ACCEPT
+sudo iptables -A INPUT -s 10.0.42.219 -j ACCEPT
+sudo iptables -A INPUT -s 10.250.61.58 -j ACCEPT
+sudo iptables -A INPUT -m statistic --mode random --probability 0.05 -j DROP
+sudo iptables -vL
+sudo tc qdisc add dev eth0 root handle 1: netem limit 1000 delay 50ms
+
+#sudo sysctl -a | grep mem_max
+#sudo sysctl -w net.core.wmem_max=1468000
+#sudo sysctl -w net.core.rmem_max=1468000
+
+#To Clean Up
+sudo iptables -F
+sudo tc qdisc del dev eth0 root

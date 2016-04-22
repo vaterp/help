@@ -1,0 +1,14 @@
+Host demo-sbc1
+        user idirect
+        HostName 172.20.6.234
+        ProxyCommand ssh buildtest nc %h 22
+
+Host demo-cpe1
+        user idirect
+        HostName 192.168.11.4
+        ProxyCommand ssh demo-sbc1 nc %h 22
+        
+Host demo-sbc2
+        user idirect
+        HostName 192.168.12.3
+        ProxyCommand ssh demo-cpe1 nc %h 22

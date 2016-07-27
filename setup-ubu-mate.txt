@@ -1,0 +1,14 @@
+sudo apt install vim-gnome git htop tmux parcellite
+
+
+
+
+
+gsettings set org.mate.Marco.general raise-on-click false
+
+
+git config --global http.sslverify false
+
+* Add NOPASSWD:ALL to %sudo line in sudoers
+
+
